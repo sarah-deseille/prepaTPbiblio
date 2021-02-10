@@ -2,6 +2,8 @@
 
 //ajout d'un petit commentaire
 
+//ajout d'un autre commentaire
+
 void init (T_Bibliotheque *ptrB)
 {
 
