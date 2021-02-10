@@ -1,5 +1,7 @@
 # include "biblio.h"
 
+//ajout d'un petit commentaire
+
 void init (T_Bibliotheque *ptrB)
 {
 
