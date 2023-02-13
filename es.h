@@ -11,3 +11,4 @@ char *lireChaine(const char *, char * , int );
 void afficherChaine(const char *,const char *);
 
 #endif
+

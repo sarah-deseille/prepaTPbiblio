@@ -4,6 +4,7 @@
 int menu()
 {
 	int choix;
+	
 // au programme du TP7 :
 printf("\n\n 1 - ajouter un nouveau livre dans la bibliotheque "); 
 printf("\n 2 - afficher tous les livres de la bibliotheque "); 
@@ -40,10 +41,13 @@ return choix;
 
 int main()
 {
-int reponse,chx;
+int reponse=-2,chx;
+
+char s[60];
+char auteur[60];
 T_Bibliotheque B; 
 init( &B );
-
+chargement(&B);
 do
 {
 chx= menu();
@@ -60,20 +64,47 @@ switch(chx)
 					printf("La bibliotheque est vide");
 
 			break;	
-	
-	
-	
-	
-	
-	}
+	case 3 : 
+			printf("entrez le titre a chercher :");
+			lire(s,MAX_TITRE);
+			//printf("%s", s);
+			reponse=chercherlivre(&B,CAPACITE_BIBLIO, s);
+			//printf("%d", reponse);
+			switch(reponse){
+				case -1 :
+					printf("la biblioteque est vide");
+					break;
+				case -2 :
+					printf("le livre n'est pas trouvé");
+					break;
 
-}while(chx!=0);
+				default :
+					printf("le livre est trouvé");
+			}
+			break;
+	case 4 :printf("enterz un auteur a chercher:");
+			scanf("%s", auteur);
+			chercherauteur(&B, &auteur);
+			break;
+
+	case 5 :printf("veuillez entrer un titre à supprimer :");
+			scanf("%s", s);
+			reponse = supprimer(&B, &s);
+			if(reponse == 1){
+			 	printf("la suppression a été faite ");
+			}
+			else{
+				printf("la supression a échoué");
+			}
+				
+			break;
 
 
+	}		
 
-
+	}while(chx!=0);
+sauvegarde(&B);
 
 
 return 0;
-
 }

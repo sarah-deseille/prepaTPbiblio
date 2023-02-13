@@ -1,7 +1,7 @@
 #include "es.h"
 
 
-char *lire(char* lachaine,int nbMAXcaracAsaisir)
+char* lire(char* lachaine,int nbMAXcaracAsaisir)
 {
 char car;
 int i=0,nbesp=0;

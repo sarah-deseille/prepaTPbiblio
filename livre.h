@@ -40,20 +40,21 @@ int lannee
 // debut de TP, on utilisera les 2 champs titre et auteur
 // puis , quand vous le deciderez, vous activerez
 // les autres champs
+
 typedef struct
 {
-//T_Code code; // code de reference du livre dans la biblio. 
+T_Code code; // code de reference du livre dans la biblio. 
 // Attention il peut y avoir pluieurs livres de même titre (le code diffèrent dans ce cas)
 T_Titre titre; // Titre du livre
 T_Aut auteur; // Nom de l'auteur
-//T_Edit editeur; // Nom de l'editeur
-//T_annee annee; // Annee de l'edition
-//T_Emp emprunteur; // Nom de l'emprunteur et date d'emprunt
+T_Edit editeur; // Nom de l'editeur
+T_annee annee; // Annee de l'edition
+T_Emp emprunteur; // Nom de l'emprunteur et date d'emprunt
 }  T_livre;
 
 
 //prototypes
-void saisirLivre(T_livre * ptrL);void afficherLivre(const T_livre *ptrL);
+void saisirLivre(T_livre * ptrL);
 void afficherLivre(const T_livre *ptrL);
 
 
