@@ -50,16 +50,17 @@
         
     }
 
-	void chercherauteur (const T_Bibliotheque  *ptrB, T_Aut *auteur){
+	int chercherauteur (const T_Bibliotheque  *ptrB, char* auteur){
         int i;
         for(i=0;i<(ptrB->nbLivres);i++){
-            if (strcmp(ptrB->etagere[i].auteur, *auteur)==0){
+            if (strcmp(ptrB->etagere[i].auteur, auteur)==0){
                 printf("le livre est trouvé :");
                 afficherLivre(&(ptrB->etagere[i]));
+                return 1;
             }
         }
 
-
+    return 0;
     }
 
 
@@ -75,6 +76,57 @@
             }
         }
         return 0;   
+    }
+
+    int empreinter(T_Bibliotheque *ptrB, char* auteur, char* titre){
+        int reponse=-2;
+        int reponse1;
+        char nom[60];
+        
+			reponse1=chercherauteur(ptrB,auteur);
+			reponse=chercherlivre(ptrB,CAPACITE_BIBLIO, titre);
+			//strcpy(nom,(&((*ptrB).etagere[reponse]))->emprunteur);
+            strcpy(nom, ptrB->etagere[reponse].emprunteur);
+
+        if (((reponse!=-1) && (reponse!=-2)) && (reponse1 == 1)){
+				printf("le livre est trouvé\n");
+				if (strcmp(nom, "")==0){
+					return reponse;
+				}
+				else{
+                    printf(">>> empreinteur :  %s\n",ptrB->etagere[reponse].emprunteur);
+					return -1;
+				}
+			}
+			else{
+				return -2;
+			}
+    }
+
+    int rendreLivre(T_Bibliotheque *ptrB, char* auteur, char* titre){
+
+        int reponse=-2;
+        int reponse1;
+
+        reponse1=chercherauteur(ptrB,auteur);
+		reponse=chercherlivre(ptrB,CAPACITE_BIBLIO, titre);
+        strcpy(ptrB->etagere[reponse].emprunteur, "");
+    }
+
+
+    void trieTitre(T_Bibliotheque *ptrB) {
+        int i, j;
+        
+        char* temp;
+        for (i = 0; i <= ptrB->nbLivres-1; i++) {
+            for (j = 0; j < ptrB->nbLivres-i-1; j++) {
+                if (strcmp(ptrB->etagere[j].titre, ptrB->etagere[j+1].titre) > 0) {
+                        strcpy(temp, &(ptrB->etagere[j]));
+                        strcpy(&(ptrB->etagere[j]), &(ptrB->etagere[j+1]));
+                        strcpy(&(ptrB->etagere[j+1]), temp);
+                }
+            }
+        }
     }
 
     void sauvegarde(T_Bibliotheque *ptrB)

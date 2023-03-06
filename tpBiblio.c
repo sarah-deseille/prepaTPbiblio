@@ -16,13 +16,13 @@ printf("\n 5 - supprimer un livre de la bibliotheque");
 
 // au programme du TP8 :
 // ajouter le champ emprunteur à votre structure T_Livre
-/*
+
 printf("\n 6 - emprunter un livre de la bibliotheque");
 printf("\n 7 - restituer/rendre un livre de la bibliotheque");
 printf("\n 8 - trier les livres (par titre)");
 printf("\n 9 - trier les livres (par auteur)");
 printf("\n 10 - trier les livres (par annee)");
-*/
+
 // si les 5 choix (6-10) sont bien codés, changez le type T_Emp et remplacez-le par la structure T_Emp visible dans livre.h
 // vous pourrez alors faire les menus 11,12,etc...
 // printf("\n 11- lister les livres disponibles "); 
@@ -42,9 +42,11 @@ return choix;
 int main()
 {
 int reponse=-2,chx;
-
+int reponse1;
+char nom[60], aut[60];
 char s[60];
-char auteur[60];
+char emp[60];
+T_Aut auteur;
 T_Bibliotheque B; 
 init( &B );
 chargement(&B);
@@ -83,8 +85,8 @@ switch(chx)
 			}
 			break;
 	case 4 :printf("enterz un auteur a chercher:");
-			scanf("%s", auteur);
-			chercherauteur(&B, &auteur);
+			lireChaine("",auteur,K_MaxAut);
+			chercherauteur(&B, auteur);
 			break;
 
 	case 5 :printf("veuillez entrer un titre à supprimer :");
@@ -99,8 +101,53 @@ switch(chx)
 				
 			break;
 
+	case 6 :
+			printf("quel livre voulez vous emprunter(titre) ?");
+			lireChaine("",s,K_MaxTit);
+			printf("quel est l'auteur du livre que vous voulez empreinter ?");
+			lireChaine("",aut,K_MaxAut);
+			int res=empreinter(&B,aut, s);
+			// -1: trouvé mais empreinté
+			// -2 non trouvé
+			// else position du livre dans etagere
 
+
+			switch(res){
+				case -1 :
+					printf("le livre est deja emprunté\n");
+					break;
+				case -2 :
+					printf("le livre n'est pas dans la bibliotéque\n");
+					break;
+
+				default :
+					printf("le livre est trouvé\n");
+					printf("vous pouvez emprunter le livre\n");
+					printf("quel est votre nom d'emprunteur ?\n");
+					scanf("%s[^\n]", emp);
+					getchar();
+					strcpy((B.etagere[res].emprunteur),emp);
+					printf("L'empreinteur est : %s\n",B.etagere[res].emprunteur );
+			}
+			break;
+	case 7 :
+			printf("quel livre voulez vous rendre(titre) ?");
+			lireChaine("",s,K_MaxTit);
+			printf("quel est l'auteur du livre que vous voulez rendre ?");
+			lireChaine("",aut,K_MaxAut);
+
+			if(empreinter(&B,aut,s) == -1){
+				rendreLivre(&B, aut, s);
+			}
+			else{
+				printf("le livre n'est pas emprunter\n");
+			}
+			break;
+	case 8 : 
+		    trieTitre(&B);
+			break;
 	}		
+	
 
 	}while(chx!=0);
 sauvegarde(&B);
